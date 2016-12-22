@@ -2,9 +2,9 @@
   'use strict';
   /**
  * @ngdoc overview
- * @name slack-api
+ * @name talent-bridge
  * @description
- * # slack-api
+ * # talent-bridge
  *
  * Main module of the application.
  */

@@ -2,9 +2,9 @@
   'use strict';
   /**
  * @ngdoc overview
- * @name travelApp
+ * @name talent-bridge
  * @description
- * # travelApp
+ * # talent-bridge
  *
  * Main module of the application.
  */
