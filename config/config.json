@@ -1,10 +1,11 @@
 {
 
-    
+    "requestURI": "/talentbridge",
     "express": {
         "view cache": false,
         "view engine": "js",
-        "views": "path:./.build/templates"
+        "views": "path:./.build/templates", 
+        "mountpath": "config:requestURI"
     },
     
 
@@ -41,6 +42,29 @@
     },
 
     "middleware": {
+        "appsec": {
+            "enabled": true,
+            "priority": 110,
+            "module": {
+                "name": "lusca",
+                "arguments": [
+                    {
+                        "csp": {
+                            "policy": {
+                                "default-src": "'self' https://*.paypalinc.com http://*.paypalinc.com https://*.paypalcorp.com http://*.paypalcorp.com https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com 'unsafe-inline' 'unsafe-eval'",
+                                "img-src": "data: https://*.paypalinc.com http://*.paypalinc.com https://*.paypalobjects.com https://*.paypal.com http://*.paypal.com http://*.paypalobjects.com 'unsafe-inline' 'unsafe-eval'",
+                                "script-src": "'self' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com 'unsafe-inline' 'unsafe-eval'",
+                                "style-src": "'self' 'unsafe-inline' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com https://fonts.googleapis.com",
+                                "font-src": "'self' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com https://fonts.gstatic.com"
+                            }
+                        },
+                        "csrf": false,
+                        "xframe": "SAMEORIGIN",
+                        "xssProtection": true
+                    }
+                ]
+            }
+        },
 
         
         "makara": {

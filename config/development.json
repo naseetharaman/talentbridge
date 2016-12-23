@@ -23,6 +23,27 @@
 
     "middleware": {
 
+         "appsec": {
+            "enabled": true,
+            "module": {
+                "name": "lusca",
+                "arguments": [{
+                    "csp": {
+                        "policy": {
+                            "default-src": "'self' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com 'unsafe-inline' 'unsafe-eval'",
+                            "img-src": "data: http://localhost:8000 https://localhost:8000 https://*.paypalobjects.com https://*.paypal.com http://*.paypal.com http://*.paypalobjects.com 'unsafe-inline' 'unsafe-eval'",
+                            "script-src": "'self' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com 'unsafe-inline' 'unsafe-eval'",
+                            "style-src": "'self' 'unsafe-inline' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com https://fonts.googleapis.com",
+                            "font-src": "'self' https://*.paypal.com https://*.paypalobjects.com http://*.paypal.com http://*.paypalobjects.com https://fonts.gstatic.com"
+                        }
+                    },
+                    "csrf": false,
+                    "xframe": "SAMEORIGIN",
+                    "xssProtection": true
+                }]
+            }
+        },
+
         "devtools": {
             "enabled": true,
             "priority": 35,
