@@ -4,7 +4,7 @@
     "express": {
         "view cache": false,
         "view engine": "js",
-        "views": "path:./.build/templates", 
+        "views": "path:./.build/templates",
         "mountpath": "config:requestURI"
     },
     
@@ -47,7 +47,7 @@
             "priority": 110,
             "module": {
                 "name": "lusca",
-                "arguments": [
+                "arguments": [  
                     {
                         "csp": {
                             "policy": {

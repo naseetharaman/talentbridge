@@ -6,7 +6,8 @@ var contributorSchema = new Schema({
    //add more fields below like  github url , website/blog url.
    Skills : [String], //Array of skills
    projects : [{ type: Schema.Types.ObjectId, ref :'Project' }],
-   contributor_detail : {
+   user : {
+   	index :true,
    	type :  Schema.Types.ObjectId,
    	ref : 'User'
    }

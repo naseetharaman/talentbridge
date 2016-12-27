@@ -1,7 +1,7 @@
 
 //require your models
 var User = require('../../models/user');
-
+var passport = require('passport');
 /*
    registration method for user registration
 
@@ -28,13 +28,23 @@ module.exports.register = function(req,res,next){
    user.roles = role;
    user.hashPassword(password);
 
+   // var userRolesById= {
+   //    partner_id : null,
+   //    contributor_id : null
+   // };
+
    //return res.json(user);
    user.createUserByRole()
    .then(function(roleUsers){
    	  console.log("role user created");
+        // if(roleUsers.partner) userRolesId.partner_id = roleUsers.partner._id;
+        // if(roleUsers.contributor) userRolesId.contributor_id = roleUsers.contributor._id;
    	  return user.save();
    }).then(function(user){
    	  console.log("login user created");
+        // var jsontoken = user.generateJwt(userRolesById);
+        // //create a cookie named token to be sent in response.
+        // res.cookie('tbtoken',jsontoken);
    	  res.json({"message" : "Registration is successfully completed"});
    }).catch(function(){
       res.status(403).json({"error" : "Registration process failed"});
@@ -48,5 +58,30 @@ module.exports.register = function(req,res,next){
 
 module.exports.login = function(req,res,next){
 	//invoke the passport login call 
+    passport.authenticate('login',function(err,user,info){
+         if(err){
+            return res.status(403).json({'error' : err});
+         }
+
+         if(!user){
+            return res.status(403).json({'error': info.message});
+         }
+
+         req.logIn(user,function(err){
+            if(err){ 
+               return res.status(403).json({'error' : err});
+            }
+            //console.log(req.user ,"=====", req.session);
+
+            //Get the user id and role  and set it in cookie and send it as json webtoken
+            return res.json({'message': 'Log in Succesfull. Your session has been created'});
+         });
+
+
+    })(req,res,next);
+}
+
+
+module.exports.checkRoles = function(req,roles){
 
 }

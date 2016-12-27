@@ -1,12 +1,15 @@
 var Promise = require('bluebird');
 var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const PARTNER_ROLE ='PARTNER';
 const CONTRIBUTOR_ROLE = 'CONTRIBUTOR';
 const ADMIN_ROLE = 'ADMIN'; 
-//var ROLES = ['PARTNER','CONTRIBUTOR','ADMIN'];
+
+var secret = 'TalentBridgeSecret'; //TODO: Move this secret to config
+
 
 var Partner = require('./partner');
 var Contributor = require('./contributor');
@@ -51,13 +54,16 @@ var userSchema = new Schema({
 userSchema.methods.hashPassword = function(password){
    console.log("hashing password..");
    this.salt = crypto.randomBytes(16).toString('hex');
+   //TODO: Convert this below sync call to async call
    this.hash_password = crypto.pbkdf2Sync(password,this.salt,1000,64,'sha512').toString('hex');
 };
 
 userSchema.methods.validatePassword = function(password){
   console.log("validating password..");
+  //TODO : Convert this below sync call to async call
   var hash = crypto.pbkdf2Sync(password,this.salt,1000,64,'sha512').toString('hex');
-  return this.hash === hash;
+  console.log(this.hash_password === hash);
+  return this.hash_password === hash;
 };
 
 userSchema.methods.isPartner = function(){
@@ -68,23 +74,45 @@ userSchema.methods.isContributor = function(){
   return this.roles.indexOf['CONTRIBUTOR'] !== -1;
 };
 
+userSchema.methods.generateJwt = function(options){
+
+  let expiry = new Date();
+  expiry.setHours(expiry.getHours() + 1); //  1 hr expiry
+  let payload = {
+    email : this.email,
+    username  : this.username,
+    role  : this.roles,
+    exp   : parseInt(expiry.getTime() /1000)
+  }
+
+  if(options.partner_id){
+    payload.partner = true;
+    payload.partner_id = partner_id;
+  }
+  if(options.contributor_id){
+    payload.contributor = true;
+    payload.contributor_id = contributor_id;
+  }
+  return jwt.sign(payload,secret);
+
+}
 userSchema.methods.createUserByRole = function(){
    var user = this;
    var userRoles = this.roles;
    var userId = this._id;
 
-   //CHECK , whether we are efficiently handling error here in different scenario, if operation failed
+   //CHECK , whether we are efficiently handling error here in different scenario, if operation fails
    var promise = Promise.resolve();
    var error ;
 
    var userByRoles={
    	'partner' : null,
    	'contributor' : null
-   }
+   };
 
    if(user.isPartner()){
         var partner = new Partner();
-        partner.partner_detail = userId;
+        partner.user = userId;
         promise = partner.save()
                   .then(function(partner){
                   	userByRoles.partner = partner;
@@ -101,7 +129,7 @@ userSchema.methods.createUserByRole = function(){
 
       if(user.isContributor()){
       	var contributor = new Contributor();
-      	contributor.contributor_detail = userId;
+      	contributor.user = userId;
       	return contributor
       	       .save()
                .then(function(contributor){

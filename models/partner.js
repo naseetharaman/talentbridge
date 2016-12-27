@@ -7,7 +7,8 @@ var partnerSchema = new Schema({
    mission     : String,
    website    : String,
    projects : [{ type: Schema.Types.ObjectId, ref :'Project' }],
-   partner_detail : {
+   user : {
+      index : true,
    	type :  Schema.Types.ObjectId,
    	ref : 'User'
    }

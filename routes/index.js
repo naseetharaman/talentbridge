@@ -1,8 +1,9 @@
 const IndexModel = require('../models/index');
 var  authCtrl = require('../controllers/auth/auth');
+var partnerCtrl = require('../controllers/partner');
 var path = require('path');
 
-//console.log("Hello");
+
 
 module.exports = function(router) {
   //console.log("Hello");
@@ -11,8 +12,39 @@ module.exports = function(router) {
   	res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
   });
 
-
+   router.get('/auth-test', function(req,res,next){
+      //console.log(req);
+      console.log(req.session , req.user);
+      return res.json({'session' : req.session, 'user': req.user});
+   })
+   
    router.post('/register', authCtrl.register);
+   router.post('/login',authCtrl.login);
+   
+   //Get the partner id from  the user id. 
+   router.get('/user/:user_id/partner_info' ,function(){
+
+   });
+
+   //Get the contributor id from the user id.
+   router.get('/user/:user_id/contributor_info',function(){
+
+   });
+   //permission allowed to authenticated partner and admin
+   router.get('/partner/:partner_id', partnerCtrl.getPartner);
+
+   router.put('/partner/:partner_id', function getPartner(){
+
+   });
+
+   router.get('/contributor/:contrib_id', function getContributor(){
+
+   });
+
+   router.put('/contributor/:contrib_id', function getContributor(){
+
+   });
+
 
 
     // router.get('/*', function (req, res) {
@@ -28,3 +60,10 @@ module.exports = function(router) {
     //     res.render('index', model);
     // });
 }
+
+
+/*
+  How to access the user information either through role id (partner/contributor) or user id 
+   
+
+*/
