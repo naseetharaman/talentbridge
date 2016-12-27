@@ -74,7 +74,7 @@ userSchema.methods.isContributor = function(){
   return this.roles.indexOf['CONTRIBUTOR'] !== -1;
 };
 
-userSchema.methods.generateJwt = function(options){
+userSchema.methods.generateJwt = function(){
 
   let expiry = new Date();
   expiry.setHours(expiry.getHours() + 1); //  1 hr expiry
@@ -85,14 +85,6 @@ userSchema.methods.generateJwt = function(options){
     exp   : parseInt(expiry.getTime() /1000)
   }
 
-  if(options.partner_id){
-    payload.partner = true;
-    payload.partner_id = partner_id;
-  }
-  if(options.contributor_id){
-    payload.contributor = true;
-    payload.contributor_id = contributor_id;
-  }
   return jwt.sign(payload,secret);
 
 }
@@ -118,8 +110,8 @@ userSchema.methods.createUserByRole = function(){
                   	userByRoles.partner = partner;
                     return Promise.resolve();
                  })
-        		 .catch(function(err){
-        	        return Promsie.reject(err);
+            		 .catch(function(err){
+            	        return Promise.reject(err);
                  });
       
    }
@@ -137,15 +129,16 @@ userSchema.methods.createUserByRole = function(){
                  return Promise.resolve();
                })
                .catch(function(err){
-               	 return Promsie.reject(err);
+               	 return Promise.reject(err);
                }) 
       }
 
    })
    .then(function(){
-   	 return Promsie.resolve(userByRoles);
+    	 return Promise.resolve(userByRoles);
    })
    .catch(function(err){
+      console.log(err);
    	  return err;
    });
 

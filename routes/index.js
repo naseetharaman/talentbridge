@@ -1,6 +1,7 @@
 const IndexModel = require('../models/index');
 var  authCtrl = require('../controllers/auth/auth');
 var partnerCtrl = require('../controllers/partner');
+var contribCtrl = require('../controllers/contributor');
 var path = require('path');
 
 
@@ -13,9 +14,7 @@ module.exports = function(router) {
   });
 
    router.get('/auth-test', function(req,res,next){
-      //console.log(req);
-      console.log(req.session , req.user);
-      return res.json({'session' : req.session, 'user': req.user});
+       return res.json({'user': req.user});
    })
    
    router.post('/register', authCtrl.register);
@@ -33,17 +32,11 @@ module.exports = function(router) {
    //permission allowed to authenticated partner and admin
    router.get('/partner/:partner_id', partnerCtrl.getPartner);
 
-   router.put('/partner/:partner_id', function getPartner(){
+   router.put('/partner/:partner_id', partnerCtrl.updatePartner);
 
-   });
+   router.get('/contributor/:contrib_id', contribCtrl.getContributor);
 
-   router.get('/contributor/:contrib_id', function getContributor(){
-
-   });
-
-   router.put('/contributor/:contrib_id', function getContributor(){
-
-   });
+   router.put('/contributor/:contrib_id', contribCtrl.updateContributor);
 
 
 

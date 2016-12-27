@@ -2,7 +2,6 @@ var Partner = require('../../models/partner');
 
 module.exports.getPartner = function(req,res,next){
 
-    //console.log(req.session, req.user);
     if(!req.user ) {
     	return res.status(403).json({'error' : 'You are not Logged In. Please log In'});
     } 
@@ -20,4 +19,8 @@ module.exports.getPartner = function(req,res,next){
      .catch(function(err){
        return res.status(403).json(err);
      })
+}
+
+module.exports.updatePartner = function(req,res,next){
+
 }

@@ -1,6 +1,6 @@
 var Contributor = require('../../models/contributor');
 
-module.exports.getPartner = function(req,res,next){
+module.exports.getContributor = function(req,res,next){
 
     if(!req.user || req.user.roles.indexOf('CONTRIBUTOR') === '-1'){
          return res.status(403).json({'error' : 'permission denied to access contributor details.'});
@@ -16,4 +16,8 @@ module.exports.getPartner = function(req,res,next){
      .catch(function(err){
        return res.status(403).json(err);
      });
+}
+
+module.exports.updateContributor = function(req,res,next){
+    
 }
