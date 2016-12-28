@@ -13,16 +13,23 @@ module.exports = function(router) {
   	res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
   });
 
+   //route to test the user authentication
    router.get('/auth-test', function(req,res,next){
-       return res.json({'user': req.user});
-   })
+       if(!req.user){
+         return res.status(403).json({'error' : 'Please Log in to access'});
+       }
+       var user = Object.assign({},req.user.toJSON());
+       // /console.log(user);
+       delete user.hash_password ; delete user.salt;
+       return res.json({'user': user});
+   });
    
    router.post('/register', authCtrl.register);
    router.post('/login',authCtrl.login);
    
    //Get the partner id from  the user id. 
    router.get('/user/:user_id/partner_info' ,function(){
-
+     
    });
 
    //Get the contributor id from the user id.

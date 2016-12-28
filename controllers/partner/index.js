@@ -7,7 +7,7 @@ module.exports.getPartner = function(req,res,next){
     } 
     if(req.user.roles.indexOf('PARTNER') == '-1'){
          return res.status(403).json({'error' : 'permission denied to access partner details.'});
-     }
+    }
 
      var partnerId = req.params.partner_id;
      //cross check the partner id.
