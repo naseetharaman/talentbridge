@@ -1,0 +1,35 @@
+<div class="login-wrap">
+	<div class="login-html">
+		<p class="paypal-logo paypal-logo-long">PayPal</p>
+		<div class="login-form">
+			<div>
+				<div class="group input-style">
+					<input id="user" ng-model="registerUser.username" placeholder="Username" type="text" class="input">
+				</div>
+				<div class="group input-style">
+					<input id="pass" ng-model="registerUser.password" placeholder="Password" type="password" class="input input-style" data-type="password">
+				</div>
+				<div class="group input-style">
+					<input id="pass" ng-model="registerUser.repassowrd" placeholder="Repeat Password" type="password" class="input " data-type="password">
+				</div>
+				<div class="group input-style">
+					<input id="pass" ng-model="registerUser.email" placeholder="Email" type="text" class="input">
+				</div>
+				<div class="group">
+					<ui-select multiple ng-model="registerUser.role" ng-disabled="loginCtrl.disabled" close-on-select="false">
+				    <ui-select-match placeholder="Select Roles...">{{$item}}</ui-select-match>
+				    <ui-select-choices repeat="role in availableColors">
+				      {{role}}
+				    </ui-select-choices>
+			  		</ui-select>
+				</div>
+				<div class="group button_spacing">
+					<input type="submit" class="button" ng-click="register()" value="Sign Up">
+				</div>
+				<div class="foot-lnk">
+					<label for="tab-1">Already Member? <a href="#/login" ng-click="viewLogin()" style="font-size: 12px; color: #0070ba">Sign In</a></label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
