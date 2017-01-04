@@ -9,6 +9,9 @@
  * Main module of the application.
  */
 angular.module('talent-bridge', [
-	'ui.router'
+	'ui.router',
+	'ui.select',
+	'ngSanitize',
+	'ngCookies'
 	]);
 })();

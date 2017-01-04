@@ -7,23 +7,25 @@
  * Main module of the application.
  */
 angular
-  .module('slack-api')
+  .module('talent-bridge')
   .service('ApiConfig', [
       function () {
-          /*var ENV = 'http://lvs-mytravel-dev-001-8825.ccg21.dev.paypalcorp.com:5000'*/
-          var ENV = 'http://localhost:5000';
+          var ENV = 'http://localhost:8000/talentbridge';
           var serviceCallUrl = ''; 
           return {
-            user:{
-                  channels : ENV + '/channels',
-                  channelInfo : ENV + '/channelInfo',
-                  archiveChannel : ENV + '/archiveChannel',
-                  unarchiveChannel : ENV + '/unarchiveChannel',
-                  notifyChannel : ENV + '/postSlackBotMessage'
+            authenticationURL:{
+              register : ENV + '/register',
+              login : ENV + '/login'
+            },
+            partner:{
+
+            },
+            contributor:{
+
             },
             admin:{
+
             }
           }
-          
       }
   ]);
