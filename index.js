@@ -4,9 +4,9 @@
 
 var express = require('express'),
     kraken = require('kraken-js'),
-   
+
     http = require('http');
-    
+
 
 var db = require('./lib/database');
 var configPassport = require('./lib/passport-setup');
@@ -28,7 +28,7 @@ options = {
         app.get('/favicon.ico', function (req, res) {
             res.redirect(mountpath + req.path);
         });
-        //TODO: move the db config to config.json file 
+        //TODO: move the db config to config.json file
         var dbConfig = {
             'host' : 'localhost',
             'database' : 'talentbridge'
@@ -36,7 +36,7 @@ options = {
         db.config(dbConfig);
         configPassport.setupPassport(app);
         next(null, config);
-    },
+    }
 };
 
 app = module.exports = express();

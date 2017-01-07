@@ -8,7 +8,7 @@ var Schema = mongoose.Schema;
 
 const PARTNER_ROLE ='PARTNER';
 const CONTRIBUTOR_ROLE = 'CONTRIBUTOR';
-const ADMIN_ROLE = 'ADMIN'; 
+const ADMIN_ROLE = 'ADMIN';
 
 var secret = 'TalentBridgeSecret'; //TODO: Move this secret to config
 
@@ -28,7 +28,7 @@ var addressSchema = new Schema({
 
 
 var userSchema = new Schema({
-	username : { 
+	username : {
 		type :String,
         required : true
 	},
@@ -44,13 +44,9 @@ var userSchema = new Schema({
 	},
 	roles : {
 		type : [String]
-		
 	},
 	address :[addressSchema],
 	mobile : Number
-
-	
-
 });
 
 userSchema.methods.hashPassword = function(password){
@@ -69,11 +65,11 @@ userSchema.methods.validatePassword = function(password){
 };
 
 userSchema.methods.isPartner = function(){
-   return this.roles.indexOf['PARTNER'] !== -1;
+   return this.roles.indexOf[PARTNER_ROLE] !== -1;
 };
 
 userSchema.methods.isContributor = function(){
-  return this.roles.indexOf['CONTRIBUTOR'] !== -1;
+  return this.roles.indexOf[CONTRIBUTOR_ROLE] !== -1;
 };
 
 userSchema.methods.generateJwt = function(){
@@ -115,7 +111,7 @@ userSchema.methods.createUserByRole = function(){
             		 .catch(function(err){
             	        return Promise.reject(err);
                  });
-      
+
    }
 
    promise
@@ -132,7 +128,7 @@ userSchema.methods.createUserByRole = function(){
                })
                .catch(function(err){
                	 return Promise.reject(err);
-               }) 
+               })
       }
 
    })
@@ -146,7 +142,7 @@ userSchema.methods.createUserByRole = function(){
 
    return promise;
 
-   
+
 }
 
 

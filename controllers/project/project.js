@@ -1,73 +1,48 @@
-var project = require('../../models/Project');
+var project = require('../../models/project/project');
 
 /*
- registration method for user registration
-
- @params username
- @params password
- @params confirmpassword  //discuss and include
+ Method to create new user
+ @params req - request object
+ @params res - response object
+ @params next -
  */
 module.exports.createProject = function(req, res, next) {
 
-    /**
-     description : String,
-     mission   : String,
-     category   : [String],   // List of categories
-     estimate_impact : {
-		money_saved : String,
-		people_impacted : String,
-		estimated_impact : String
-	},
-     status : {
-	    type : String,   // list of enum values
-	    enum : PROJECT_STATUS
-	},
-     contributors : [Schema.Types.ObjectId]   //References to contributor object
-     */
-    /*
-      1. create project.
-      */
-        var role = req.body.role; //it can be array of possible roles
-
-        var project = new  project();
-        project.username = username;
-        user.email = email;
-        user.roles = role;
-        user.hashPassword(password);
-
-        //TODO: Check if the user already registered.
-        user.save()
-            .then(function(user){
-                console.log("login user created");
+    var project = new  project();
+    if(req === null || !req.body ){
+        return res.status(400).json({'error' : 'Bad Request'});
+    }
+            project.description = req.body.description;
+            project.project_mission = req.body.project_mission;
+            project.roles = req.body.role;
+            project.project_category = req.body.project_category;
+            project.estimate_impact = req.body.estimate_impact;
+            project.status = req.body.status;
+            // When a new project is created, most of the time it would be blank
+            if (req.body.contributors !== null){
+                project.contributors = req.body.contributors;
+            }
+        project.save()
+            .then(function(project){
+                console.log("New project has been created");
                 return Promise.resolve();
             })
             .catch(function(err){
-                console.log("login user creation failed");
+                console.log("Failed to create new project");
                 return Promise.reject(err);
             })
             .then(function(){
-                return user.createUserByRole()
-                    .then(function(roleUsers){
-                        console.log("role user created...");
-                        console.log(roleUsers);
-                    }).catch(function(err){
-                        //delete the user object created if role user creation fails in order to rollback
-                        return err;
-                    })
-            })
-            .then(function(){
-                return res.json({"message" : "Registration is successfully completed"});
+                return res.json({"message" : "Project has been created sucessfully"});
             })
             .catch(function(err){
-                return  res.status(403).json({'error' :err});
+                return  res.status(401).json({'error' :err});
             });
-
-        }
+        };
 
 module.exports.getProject = function(req,res,next){
 
-    if(!req.user || req.user.roles.indexOf('CONTRIBUTOR') === '-1' || req.user.roles.indexOf('PARTNER') === '-1'){
-        return res.status(403).json({'error' : 'permission denied to access contributor details.'});
+    if(!req.project){
+        return res.status(403).json({'error' : 'permission denied to access project details.'});
     }
 
     var projectId = req.params.project_id;
