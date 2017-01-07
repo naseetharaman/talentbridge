@@ -4,7 +4,7 @@ module.exports.getPartner = function(req,res,next){
 
     if(!req.user ) {
     	return res.status(403).json({'error' : 'You are not Logged In. Please log In'});
-    } 
+    }
     if(req.user.roles.indexOf('PARTNER') == '-1'){
          return res.status(403).json({'error' : 'permission denied to access partner details.'});
     }
