@@ -28,24 +28,19 @@ module.exports = function(router) {
    router.post('/login',authCtrl.login);
    
    //Get the partner id from  the user id. 
-   router.get('/user/:user_id/partner_info' ,function(){
-     
-   });
+   router.get('/user/:user_id/profile',authCtrl.verifyAuth,authCtrl.getUser);
+   router.put('/user/:user_id/profile', authCtrl.verifyAuth, authCtrl.updateUser);
 
-   //Get the contributor id from the user id.
-   router.get('/user/:user_id/contributor_info',function(){
-
-   });
    //permission allowed to authenticated partner and admin
-   router.get('/partner/:partner_id', partnerCtrl.getPartner);
+   router.get('/partner/:partner_id/profile', authCtrl.verifyAuth, partnerCtrl.getPartnerProfile);
 
-   router.put('/partner/:partner_id', partnerCtrl.updatePartner);
+   router.put('/partner/:partner_id/profile',authCtrl.verifyAuth, partnerCtrl.updatePartnerProfile);
 
-   router.get('/contributor/:contrib_id', contribCtrl.getContributor);
+   router.get('/contributor/:contrib_id/profile', authCtrl.verifyAuth, contribCtrl.getContributorProfile);
 
-   router.put('/contributor/:contrib_id', contribCtrl.updateContributor);
+   router.put('/contributor/:contrib_id/profile', authCtrl.verifyAuth,contribCtrl.updateContributorProfile);
 
-
+ // router.get('/project/:project_id', partnerCtrl.getPartner);
 
     // router.get('/*', function (req, res) {
     //     model.requestURI=req.app.kraken.get('requestURI');

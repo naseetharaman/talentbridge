@@ -18,4 +18,12 @@ partnerSchema.methods.getProjects = function(){
   //return the list of partner project
 };
 
+partnerSchema.statics.getPartnerProfile = function(){
+
+};
+
+partnerSchema.statics.updatePartnerProfile = function(id,data){
+   
+}
+
 module.exports = mongoose.model('Partner',partnerSchema);

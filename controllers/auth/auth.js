@@ -18,11 +18,18 @@ module.exports.register = function(req,res,next){
        2. if role is contributor create contributor record , else if role is partner create partner record else both create contrib/partner
          ie., based on role create dynamic create creation.
    */
+   //TODO: use validator module for validation and sanitazation.
+   if(!req.body.username || !req.body.email || !req.body.password || !req.body.role){
+       return res.status(403).json({error:'Validation error: username/password/email/role fields are mandatory'});
+   }
    var username = req.body.username;
    var email = req.body.email;
    var password = req.body.password;
-   var role = req.body.role; //it can be array of possible roles
-
+   var role = req.body.role; //it can be array of possible roles or single value
+   if(typeof role === 'string') {
+    role = [role];
+   }
+  // console.log("Input Roles",role ,typeof(role));
    var user = new  User();
    user.username = username;
    user.email = email;
@@ -42,18 +49,27 @@ module.exports.register = function(req,res,next){
    .then(function(){
        return user.createUserByRole()
               .then(function(roleUsers){
-                 console.log("role user created...");
+                 console.log("role user/s created...");
                  console.log(roleUsers);
               }).catch(function(err){
                  //delete the user object created if role user creation fails in order to rollback
-                  return err;
-              })
+                  console.log(err);
+                  return user.remove().then(function(){
+                     return Promise.reject(err);
+                   })
+              });
    })
    .then(function(){
-      return res.json({"message" : "Registration is successfully completed"});
+     //saving the user object 
+      return user.save().then(function(){
+        return res.json({"message" : "Registration is successfully completed"});
+      }); 
+      
    })
    .catch(function(err){
-      return  res.status(403).json({'error' :err});
+        return res.status(403).json({'error' :err});
+      
+       
    })
    
    // user.createUserByRole()
@@ -75,7 +91,14 @@ module.exports.register = function(req,res,next){
 }
 
 module.exports.login = function(req,res,next){
-	//invoke the passport login call 
+
+    //Check if the user has already loggedIn
+    if(req.user){
+      res.json({message:'You already loggedIn... '});
+      return;
+    }
+
+  	//invoke the passport login call 
     passport.authenticate('login',function(err,user,info){
          if(err){
             return res.status(403).json({'error' : err});
@@ -101,7 +124,46 @@ module.exports.login = function(req,res,next){
     })(req,res,next);
 }
 
+module.exports.logout = function(req,res,next){
+  
+}
 
-module.exports.checkRoles = function(req,roles){
 
+module.exports.verifyAuth = function(req,res,next){
+  if(!req.user){
+         return res.status(403).json({'error' : 'Please Log in to access'});
+  }
+  next();
+}
+
+module.exports.getUser = function(req,res,next){
+   var userId = req.params.user_id;
+   //TODO :check whether params userid against the userid in the session because user profile info 
+   //should be visible only to him or any other PARTNER and ADMIN
+   User.getUser(userId)
+   .then(function(user){
+     return res.json(user);
+   })
+   .catch(function(err){
+     console.log(err);
+     return res.status(403).json({'error' : 'Failed to retreive the user'});
+   })
+
+
+}
+
+module.exports.updateUser = function(req,res,next){
+  var userId = req.params.user_id;
+  if(!req.body.mobile || !req.body.city ||  !req.body.state || !req.body.zip || !req.body.country){
+     return res.status(403).json({error:'Validation error: mobile/city/state/zip/country fields are mandatory'}); 
+  }
+  var data = Object.assign({},req.body);
+
+  User.updateUserProfile(userId,data)
+     .then(function(){
+       return res.json({message : 'You profile has been saved successfully'});
+     })
+     .catch(function(err){
+       return res.json({error : err.error});
+     })
 }

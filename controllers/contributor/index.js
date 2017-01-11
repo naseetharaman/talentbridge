@@ -1,23 +1,56 @@
 var Contributor = require('../../models/contributor');
 
-module.exports.getContributor = function(req,res,next){
-
-    if(!req.user || req.user.roles.indexOf('CONTRIBUTOR') === '-1'){
-         return res.status(403).json({'error' : 'permission denied to access contributor details.'});
-     }
-
-     var contributorId = req.params.contributor_id;
-     //cross check the contributor id.
+module.exports.getContributorProfile = function(req,res,next){
+    
+    //Allow the partner to see the contributor profile
+    
+    //TODO : Only Partner or self user  can see the contrib profile details 
+     var contributorId = req.params.contrib_id ;
+     var sessionContrib_id = req.user.contributor_id || "";
+     // if(sessionContrib_id !== contributorId || req.user.roles.indexOf('PARTNER') === '-1' ){
+     //    return res.status(403).json({'error' : 'permission denied to access contributor details.'});
+     // }
+     
      Contributor
-     .findById(contributorId)
+     .getContributorProfile(contributorId)
      .then(function(contributor){
-        return res.json(contributor);
+        if(contributor) return res.json({ doc : contributor })
+        return res.json({ message : "User does not exists"});
      })
      .catch(function(err){
        return res.status(403).json(err);
      });
+     
 }
 
-module.exports.updateContributor = function(req,res,next){
+module.exports.updateContributorProfile = function(req,res,next){
+
+   //Skills has to be the list of skill value.we don't have decided any schema to skills
+  if(!req.body.skills){
+       return res.status(403).json({error:'Validation error: skills fields  are mandatory'});
+   }
+   var contributorId = req.params.contrib_id ;
+   //validating below to cross check the own user is updating the profile
+   console.log("params contribId",contributorId);
+   console.log("session contribId",req.user.contributor_id);
+   var sessionContrib_id = req.user.contributor_id || "";
+   if(sessionContrib_id != contributorId ){
+        return res.status(403).json({'error' : 'permission denied to access contributor details.'});
+   }
+   //copying req.body data and check if skills are sent has multiple value
+   
+   var data = Object.assign({},req.body);
+   if(typeof data.skills == 'string'){
+     data.skills = [data.skills];
+   }
+
+   //Invoke the contributor model and send the id and data.
+   Contributor.updateContributorProfile(contributorId, data)
+   .then(function(){
+     return res.json({message : 'Contributor profile has been saved successfully'});
+   })
+   .catch(function(err){
+     return res.json({error : err.error})
+   })
     
 }

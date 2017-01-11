@@ -30,7 +30,7 @@ var addressSchema = new Schema({
 var userSchema = new Schema({
 	username : { 
 		type :String,
-        required : true
+    required : true
 	},
 	hash_password : String, //hashed paasword
 	salt : String,
@@ -47,7 +47,13 @@ var userSchema = new Schema({
 		
 	},
 	address :[addressSchema],
-	mobile : Number
+	mobile : String, //validation has to be followed
+  partner_id : { //if he is partner , set the partner id
+   type :  Schema.Types.ObjectId
+  },
+  contributor_id : { //if he is user , set the contributor id
+    type :  Schema.Types.ObjectId
+  }
 
 	
 
@@ -69,11 +75,13 @@ userSchema.methods.validatePassword = function(password){
 };
 
 userSchema.methods.isPartner = function(){
-   return this.roles.indexOf['PARTNER'] !== -1;
+   console.log("isPartner", this.roles, this.roles.indexOf('PARTNER'));
+   return this.roles.indexOf('PARTNER') > -1 
 };
 
 userSchema.methods.isContributor = function(){
-  return this.roles.indexOf['CONTRIBUTOR'] !== -1;
+  console.log("IsContrib",this.roles,this.roles.indexOf('CONTRIBUTOR') );
+  return this.roles.indexOf('CONTRIBUTOR') > -1
 };
 
 userSchema.methods.generateJwt = function(){
@@ -96,58 +104,133 @@ userSchema.methods.createUserByRole = function(){
    var userId = this._id;
 
    //CHECK , whether we are efficiently handling error here in different scenario, if operation fails
-   var promise = Promise.resolve();
+
+   //TODO : the below creation logic should be rewritten efficiently and needs to be tested across diff edge cases.
+   //Refer to bluebird lib(3.0 and more) @ http://bluebirdjs.com/docs/api/reflect.html. May be it will help
    var error ;
 
    var userByRoles={
    	'partner' : null,
    	'contributor' : null
    };
-
-   if(user.isPartner()){
+  
+   return new Promise(function(resolve,reject){
+      var promise = Promise.resolve();
+      if(user.isPartner()){
         var partner = new Partner();
-        partner.user = userId;
+        partner.user = userId;   //mapping the user id ref into partner object
+        user.partner_id = partner._id; //mapping partner id in to user object
         promise = partner.save()
-                  .then(function(partner){
-                  	userByRoles.partner = partner;
+                  .then(function(doc){
+                    userByRoles.partner = doc;
                     return Promise.resolve();
                  })
-            		 .catch(function(err){
-            	        return Promise.reject(err);
+                 .catch(function(err){
+                      return Promise.reject(err);
                  });
       
-   }
+    }
 
-   promise
-   .then(function(){
+     promise
+       .then(function(){
 
-      if(user.isContributor()){
-      	var contributor = new Contributor();
-      	contributor.user = userId;
-      	return contributor
-      	       .save()
-               .then(function(contributor){
-               	 userByRoles.contributor = contributor;
-                 return Promise.resolve();
-               })
-               .catch(function(err){
-               	 return Promise.reject(err);
-               }) 
-      }
+          if(user.isContributor()){
+            var contributor = new Contributor();
+            contributor.user = userId; //mapping the user id ref into contributor  object
+            user.contributor_id = contributor._id // //mapping the contrib ref into user  object
+            return contributor
+                   .save()
+                   .then(function(doc){
+                     userByRoles.contributor = doc;
+                     return Promise.resolve();
+                   })
+                   .catch(function(err){
+                     return Promise.reject(err);
+                   }) 
+          }
 
-   })
-   .then(function(){
-    	 return Promise.resolve(userByRoles);
-   })
-   .catch(function(err){
-      console.log(err);
-   	  return err;
+       })
+       .then(function(){
+           //console.log(userByRoles);
+           return resolve(userByRoles);
+       })
+       .catch(function(err){
+          console.log(err);
+          return reject(err);
+       });
+
+
    });
-
-   return promise;
-
-   
+  
 }
 
+userSchema.statics.getUser = function(id){
+    return this.findById(id)
+           .then(function(doc){
+              var user = Object.assign({},doc.toJSON());
+              delete user.hash_password ; delete user.salt;
+              return user;
+           })
+           .catch(function(err){
+             return Promise.reject(err);
+           })
+}
+
+userSchema.statics.updateUserProfile = function(id,data){
+      
+     let address = {
+       street_line1 : data.street_line1 || 'NA',
+       street_line2 : data.street_line2 || 'NA',
+       city : data.city,
+       state : data.state,
+       zip  : data.zip,
+       country : data.country
+     };
+     let mobile = data.mobile;
+     return this.findById(id)
+            .then(function(user){
+            user.mobile = mobile;
+            user.address = address;
+            return user.save()
+                   .catch(function(err){
+                      console.log("ERROR: user profile update failed:",err);
+                      return Promise.reject({error : 'User Profile failed to save..'});
+                   });
+
+            });
+
+}
 
 module.exports = mongoose.model('User',userSchema);
+
+
+/*
+  TODO : Fix the above creation logic like below 
+
+    return Promise.try(function(){
+     var rolePromises = [];
+     if(user.isPartner()){
+        var partner = new Partner();
+        partner.user = userId;
+        let partnerPromise = partner.save();
+        rolePromises.push(partnerPromise);
+     }
+
+     if(user.isContributor(){
+        var contributor = new Contributor();
+        contributor.user = userId;
+        let contribPromise = contributor.save();
+        rolePromises.push(contribPromise);
+     })
+
+     
+    return rolePromises.all(rolePromises).spread(function(partner,contributor){
+        if(partner) userByRoles.partner = partner;
+        if(contributor) userByRoles.contributor = contributor;
+        return userByRoles;
+    });
+    
+  });
+
+
+*/
