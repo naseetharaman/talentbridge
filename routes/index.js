@@ -44,10 +44,10 @@ module.exports = function(router) {
    router.put('/contributor/:contrib_id', contribCtrl.updateContributor);
 
     /**
-     * — Create Project
+     — Create Project
+     — modify project fields
      — Update Project Status
      — retrieve projects based on status
-     — modify project fields
      — update project rating
      — Update number of contributors to the project
      — Add Contributors to the project
@@ -56,19 +56,12 @@ module.exports = function(router) {
      — delete Contributors assigned to the project
      */
     router.post('/project', projectCtrl.createProject);
+    router.get('/project/:project_id', projectCtrl.getProject);
+    router.put('/project/:project_id',projectCtrl.updateProject);
+    router.put('/project/: project/?action="updateStatus"',projectCtrl.updateProjectStatus);
+    router.put('/project/:project_id',projectCtrl.updateProject);
+    router.put('/project/:project_id',projectCtrl.updateProject);
 
-    // router.get('/*', function (req, res) {
-    //     model.requestURI=req.app.kraken.get('requestURI');
-    //     model.user = res.locals.user || {};
-    //     model.user.role='dev';
-
-
-    //     if (!model.user.role || req.app.kraken.get('DENY_ACCESS')) {
-    //         model.user.unauthorized = true;
-    //     }
-    //     model.env = process.env.DEPLOY_ENV || 'dev';
-    //     res.render('index', model);
-    // });
 }
 
 
