@@ -14,7 +14,7 @@ module.exports.getContributorProfile = function(req,res,next){
      Contributor
      .getContributorProfile(contributorId)
      .then(function(contributor){
-        if(contributor) return res.json({ doc : contributor })
+        if(contributor) return res.json({ data : contributor })
         return res.json({ message : "User does not exists"});
      })
      .catch(function(err){
@@ -26,13 +26,12 @@ module.exports.getContributorProfile = function(req,res,next){
 module.exports.updateContributorProfile = function(req,res,next){
 
    //Skills has to be the list of skill value.we don't have decided any schema to skills
-  if(!req.body.skills){
+  if(!req.body.skills || !req.body.expertise){
        return res.status(403).json({error:'Validation error: skills fields  are mandatory'});
    }
    var contributorId = req.params.contrib_id ;
+   
    //validating below to cross check the own user is updating the profile
-   console.log("params contribId",contributorId);
-   console.log("session contribId",req.user.contributor_id);
    var sessionContrib_id = req.user.contributor_id || "";
    if(sessionContrib_id != contributorId ){
         return res.status(403).json({'error' : 'permission denied to access contributor details.'});
@@ -42,6 +41,9 @@ module.exports.updateContributorProfile = function(req,res,next){
    var data = Object.assign({},req.body);
    if(typeof data.skills == 'string'){
      data.skills = [data.skills];
+   }
+   if(typeof data.expertise == 'string'){
+     data.expertise = [data.expertise];
    }
 
    //Invoke the contributor model and send the id and data.
