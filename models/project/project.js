@@ -22,4 +22,22 @@ var projectSchema = new Schema({
 	contributors : [Schema.Types.ObjectId]   //References to contributor object
 });
 
+projectSchema.statics.updateProject= function(id,data){
+
+    //TODO : Try to wrap the code in Promise.try() bluebird method.
+    return this.findById(id)
+        .exec()
+        .then(function(project){
+            project.title =  data.title;
+            project.description = data.description;
+            return project.save();
+        })
+        .catch(function(err){
+            console.log("ERROR: project update failed:",err);
+            return Promise.reject({error : 'Project Record failed to save..'});
+        });
+
+
+};
+
 module.exports = mongoose.model('Project',projectSchema);

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var contributorSchema = new Schema({
-   
+
    //add more fields below like  github url , website/blog url.
    skills : [String], //Array of skills
    expertise : [String], //Array of expertise like FrontEnd dev, Backedn Dev,DB Engineer, Designer
@@ -27,14 +27,14 @@ contributorSchema.statics.getContributorProfile = function(id){
            .catch(function(err){
              return err;
            });
-   
-   
+
+
 };
 
 contributorSchema.statics.updateContributorProfile= function(id,data){
    //if you want to check any modfication for skills do here before calling mongoose api
 
-   //TODO : Try to wrap the code in Promise.try() bluebird method. 
+   //TODO : Try to wrap the code in Promise.try() bluebird method.
    let skills = data.skills;
    let expertise = data.expertise;
 
@@ -50,8 +50,6 @@ contributorSchema.statics.updateContributorProfile= function(id,data){
            	 console.log("ERROR: contributor profile update failed:",err);
              return Promise.reject({error : 'Contributor Profile failed to save..'});
            });
-   
-   
 };
 
 

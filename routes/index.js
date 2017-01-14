@@ -34,7 +34,7 @@ module.exports = function(router) {
     //permission allowed to authenticated partner and admin
     router.get('/partner/:partner_id/profile', authCtrl.verifyAuth, partnerCtrl.getPartnerProfile);
 
-    router.put('/partner/:partner_id/profile',authCtrl.verifyAuth, partnerCtrl.updatePartnerProfile);
+    router.put('/partner/:partner_id/profile', authCtrl.verifyAuth, partnerCtrl.updatePartnerProfile);
 
     router.get('/contributor/:contrib_id/profile', authCtrl.verifyAuth, contribCtrl.getContributorProfile);
 
@@ -51,12 +51,12 @@ module.exports = function(router) {
      — update Contributors assigned to the project
      — delete Contributors assigned to the project
      */
-    router.post('/project', projectCtrl.createProject);
-    router.get('/project/:project_id', projectCtrl.getProject);
-    router.put('/project/:project_id',projectCtrl.updateProject);
-    router.put('/project/: project/?action="updateStatus"',projectCtrl.updateProjectStatus);
-    router.put('/project/:project_id',projectCtrl.updateProject);
-    router.put('/project/:project_id',projectCtrl.updateProject);
+    router.post('/project', authCtrl.verifyAuth, projectCtrl.createProject);
+    router.get('/project/:project_id', authCtrl.verifyAuth, projectCtrl.getProject);
+    router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
+    router.put('/project/:project_id/status', authCtrl.verifyAuth, projectCtrl.updateProjectStatus);
+    router.put('/project/:project_id/rating', authCtrl.verifyAuth, projectCtrl.updateProject);
+    router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
 
  // router.get('/project/:project_id', partnerCtrl.getPartner);
 
