@@ -35,6 +35,25 @@
           templateUrl: 'modules/login/views/register.html',
           controller: 'loginCtrl1'
         })
+      .state('profile', {
+          url: '/profile',
+          templateUrl: 'modules/profile/views/profile.html',
+          controller: 'profileCtrl'
+        })
+      .state('partnerinfo', {
+          url: '/partnerinfo',
+          templateUrl: 'modules/profile/views/partnerForm.html',
+          controller: 'profileCtrl'
+        })
+      .state('contributorinfo', {
+          url: '/contributorinfo',
+          templateUrl: 'modules/profile/views/contributorForm.html',
+          controller: 'profileCtrl'
+        })
+      .state('editprofile', {
+          url: '/edit/profile',
+          templateUrl: 'modules/profile/views/editProfile.html'
+        })
     }
   ]);
 })();
