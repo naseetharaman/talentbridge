@@ -12,6 +12,7 @@ angular.module('talent-bridge', [
 	'ui.router',
 	'ui.select',
 	'ngSanitize',
-	'ngCookies'
+	'ngCookies',
+	'ui.select2'
 	]);
 })();

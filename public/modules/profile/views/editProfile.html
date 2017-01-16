@@ -1,0 +1,95 @@
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-1">
+  </div>
+  <div class="col-md-10">
+      <header class="panel-heading">
+        <H3>My Profile<i type="submit" style="float:right; color:#089DE3; font-size:14px; margin-right:20px;" class="glyphicon glyphicon-remove" onclick="history.back()"/></H3>
+      </header>
+      <div class="panel-body">
+        <div class="col-md-12">
+          <form class="form-horizontal tasi-form">
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Full Name</label>
+              </div>
+              <div class="col-md-4">
+              <input class="form-control" id="disabledInput" ng-model="myprofiledata.team" type="text" placeholder="Please enter your team name" required>
+                <p required>{{myprofiledata.name}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>User ID</label>
+              </div>
+              <div class="col-md-4" >
+              <input class="form-control" id="disabledInput" ng-model="myprofiledata.team" type="text" placeholder="Please enter your team name" required>
+                <p required>{{myprofiledata.corpid}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Email</label>
+              </div>
+              <div class="col-md-4" >
+              <input class="form-control" id="disabledInput" ng-model="myprofiledata.email" type="text" placeholder="Please enter your team name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Reporting Manager</label>
+              </div>
+              <div class="col-md-4" >
+              <input class="form-control" id="disabledInput" ng-model="myprofiledata.manager" type="text" placeholder="Please enter your team name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Gender<span style="color:red"> *</span></label>
+              </div>
+              <div class="col-md-4" >
+              <input id="male" type="radio" ng-model="myprofiledata.gender" value="Male">
+              <span style="margin-right:10px">Male</span>
+              <input id="female" type="radio" ng-model="myprofiledata.gender" value="Female">
+              <span>Female</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Contact No<span style="color:red"> *</span></label>
+              </div>
+              <div class="col-md-4" >
+                <input class="form-control" id="focusedInput" type="tel" placeholder="Please enter your contact no." tooltips tooltip-template="Please enter the mobile number" minlength="10" maxlength="10" ng-model="myprofiledata.phone" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Team<span style="color:red"> *</span></label>
+              </div>
+              <div class="col-md-4" >
+                <input class="form-control" id="disabledInput" ng-model="myprofiledata.team" type="text" placeholder="Please enter your team name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label>Address & Landmark<span style="color:red"> *</span></label>
+              </div>
+              <div class="col-md-4" >
+                <input type="text" class="form-control" ng-model="myprofiledata.address" placeholder="Please enter your address & landmark" required>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-12 form-group text-center">
+        <button type="submit" ng-click="submitForm()" class="btn button-submit">Save</button>
+        </div>
+        <div class="col-md-12 form-group">
+        <p style="float:right;"><span style="color:red;">*&nbsp&nbsp&nbsp</span>Manditory fileds</p>
+        </div>
+        </form>
+      </div>
+  </div>
+<div class="col-md-1">
+  </div>
+</div> 
+</div>
+</div>
