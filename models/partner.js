@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -35,7 +37,7 @@ partnerSchema.statics.updatePartnerProfile = function(id,data){
    let org_name = data.org_name;
    let description = data.description;
    let mission = data.mission;
-   let website = data.website;   
+   let website = data.website;
    //do any changes if you want.
    return  this.findById(id)
            .populate('user','-salt -hash_password' ) //retreiving the user field except salt and password
