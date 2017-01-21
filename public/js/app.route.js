@@ -15,15 +15,14 @@
 
       $locationProvider.hashPrefix('');
       // if url not defined redirect to login
-      $urlRouterProvider.when( '', "/" );
+      $urlRouterProvider.when( '', "/home" );
       // if nonexistant url defined redirect to sign-in
-      $urlRouterProvider.otherwise( "/" );
+      $urlRouterProvider.otherwise( "/home" );
 
       $stateProvider
       .state('home', {
           url: '/home',
-          templateUrl: 'modules/login/views/home.html',
-          controller: 'homeCtrl'
+          templateUrl: 'modules/home/views/home.html'
         })
       .state('login', {
           url: '/login',

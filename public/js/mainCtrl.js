@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('talent-bridge')
-    .controller('mainCtrl', function($state, $http, authentication, $scope) {
-    	$scope.header = {};
-
-        var username = authentication.currentUser();
-        if (username) {
-            $scope.header.name = value.name;
-            $scope.header.role = value.role;
+ .controller('mainCtrlabc', function($http, $state, $scope, authentication, ModalService, $window) {
+    $scope.header = {};
+        var user = authentication.currentUser();
+        if (user) {
+            
+            $scope.header.name = user.name;
+            $scope.header.role = user.role;
+            console.log($scope.header);
 
             if ($scope.header.name) {
                 $scope.showname = true;
@@ -19,15 +20,14 @@ angular.module('talent-bridge')
         } else {
           $scope.showname = false;
             $scope.showsigin = true;
-            $state.go('login');    
-        }
-
+            $state.go('login');
+            
+        } 
+        
         $scope.logoutApp = function() {
             var logoutfunc = authentication.logout();
-            if (!logoutfunc) {
-                $state.go('home');
-            }
+            console.log(logoutfunc);
+            $state.go('home');
         };
 
-
-    });
+ });

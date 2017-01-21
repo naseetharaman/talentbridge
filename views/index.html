@@ -12,10 +12,9 @@
         <link rel="stylesheet" href="components/angular-ui-select/dist/select.min.css" />
         <link rel="stylesheet" href="components/select2/select2.css" />
         <link rel="stylesheet" href="components/angular-ui-select2/docs/styles.css" />
-        <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:600'>
+        <link rel='stylesheet prefetch' href="style/font.css" />
     </head>
-    <body ng-app="talent-bridge" ng-controller="mainCtrl">
-
+    <body ng-app="talent-bridge" ng-controller="mainCtrlabc">
         <div  ng-include="'modules/common/header.html'"></div>
         <div ui-view></div>
         <!-- <div ng-include="'modules/common/footer.html'"></div> -->
@@ -26,7 +25,6 @@
         <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
         <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script src="components/angular-tooltips/dist/angular-tooltips.min.js"></script>
         <script src="components/angular-ui-select/dist/select.min.js"></script>
         <script src="components/angular-cookies/angular-cookies.min.js"></script>
         <script src="components/select2/select2.js"></script>
@@ -35,16 +33,16 @@
         <!-- Custom javascript files-->
 
         <!-- Controller -->
-        <script src="js/app.js" type="text/javascript"></script>
-        <script src="js/app.route.js" type="text/javascript"></script>
-        <script src="js/main.js" type="text/javascript"></script>
-        <script src="shared/authentication.service.js" type="text/javascript"></script>
-        <script src="shared/service-call-url.service.js" type="text/javascript"></script>
+        <script src="js/app.js"></script>
+        <script src="js/app.route.js"></script>
+        <script src="js/mainCtrl.js"></script>
+        <script src="shared/services/authentication.service.js"></script>
+        <script src="shared/services/service-call-url.service.js"></script>
+        <script src="shared/services/modal.service.js"></script>
 
         <script src="modules/login/controllers/loginCtrl.js"></script>
         <script src="modules/home/controllers/homeCtrl.js"></script>
         <script src="modules/profile/controllers/profileCtrl.js"></script>
-
-
+        
     </body>
 </html>

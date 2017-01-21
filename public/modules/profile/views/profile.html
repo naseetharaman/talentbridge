@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container boxstyle">
   
-<div class="stepwizard col-md-offset-3">
+<div class="stepwizard col-md-offset-3" style="margin-top: 2%">
     <div class="stepwizard-row setup-panel">
       <div class="stepwizard-step">
         <a href="#/profile" type="button" class="btn btn-primary btn-circle">1</a>
@@ -17,35 +17,35 @@
     </div>
   </div>
 
-  <form role="form" action="" method="post">
-    <div class="row setup-content" id="step-1">
-      <div class="col-xs-6 col-md-offset-3">
+  <form role="form" style="margin-bottom: 2%">
+    <div class="row" id="step-1">
+      <div class="col-xs-10 col-md-offset-1">
         <div class="col-md-12">
           <h3>Profile</h3>
           <div class="form-group">
             <label class="control-label">Full Name</label>
-            <input  maxlength="100" type="text" required="required" class="form-control" placeholder="Enter First Name"  />
+            <input type="text" required="required" class="form-control" placeholder="Enter First Name"  />
           </div>
           <div class="form-group">
             <label class="control-label">Username</label>
-            <input maxlength="100" type="text" required="required" class="form-control" />
+            <input type="text" required="required" class="form-control" />
           </div>
           <div class="form-group">
             <label class="control-label">Phone</label>
-            <input maxlength="100" type="text" required="required" class="form-control" placeholder="Enter your mobile number" />
+            <input type="text" required="required" class="form-control" placeholder="Enter your mobile number" />
           </div>
           <div class="form-group">
             <label class="control-label">Email</label>
-            <input maxlength="100" type="text" required="required" class="form-control" placeholder="Enter Last Name" />
+            <input type="text" required="required" class="form-control" placeholder="Enter Last Name" />
           </div>
           <div class="form-group">
             <label class="control-label">Address</label>
             <textarea required="required" class="form-control" placeholder="Enter your Street Line 1" ></textarea>
             <textarea required="required" class="form-control" placeholder="Enter your Street Line 2" ></textarea>
-            <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
             <div class="col-md-6">
             <span>Select your country :<br>
-            <select ui-select2 style="width: 100%;" ng-model="country" width=100px; ng-options="data as data for data in country"><option value=''>- Please Choose -</option></select></span>
+            <select ui-select2 style="width: 100%;" ng-model="country.set" width=100px; ng-options="data as data for data in country"><option value=''>- Please Choose -</option></select></span>
             </div>
             <div class="col-md-6">
             <span>Select your state : <br>

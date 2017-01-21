@@ -25,6 +25,9 @@ angular
             },
             admin:{
 
+            },
+            user:{
+              
             }
           }
       }

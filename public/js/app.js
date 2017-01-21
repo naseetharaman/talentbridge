@@ -13,6 +13,7 @@ angular.module('talent-bridge', [
 	'ui.select',
 	'ngSanitize',
 	'ngCookies',
-	'ui.select2'
+	'ui.select2',
+	'ui.bootstrap'
 	]);
 })();
