@@ -56,23 +56,12 @@ module.exports = function(router) {
     router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
     router.put('/project/:project_id/status', authCtrl.verifyAuth, projectCtrl.updateProjectStatus);
     router.put('/project/:project_id/rating', authCtrl.verifyAuth, projectCtrl.updateProject);
+    router.put('/project/:project_id/rating', authCtrl.verifyAuth, projectCtrl.updateProject);
     router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
 
  // router.get('/project/:project_id', partnerCtrl.getPartner);
 
-    // router.get('/*', function (req, res) {
-    //     model.requestURI=req.app.kraken.get('requestURI');
-    //     model.user = res.locals.user || {};
-    //     model.user.role='dev';
-
-
-    //     if (!model.user.role || req.app.kraken.get('DENY_ACCESS')) {
-    //         model.user.unauthorized = true;
-    //     }
-    //     model.env = process.env.DEPLOY_ENV || 'dev';
-    //     res.render('index', model);
-    // });
-}
+};
 
 
 /*

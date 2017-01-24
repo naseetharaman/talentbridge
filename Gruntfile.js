@@ -8,10 +8,10 @@ module.exports = function (grunt) {
         configDir: require('path').resolve('tasks')
     });
 
-    
-    
     // Register group tasks
     grunt.registerTask('build', ['jshint', 'dustjs', 'less', 'copyto']);
     grunt.registerTask('test', [ 'jshint', 'mochacli' ]);
+	grunt.registerTask('checkstyle', ['eslint:browser','eslint:server','eslint:test']);
+	grunt.registerTask('lint', ['csslint']);
 
 };
