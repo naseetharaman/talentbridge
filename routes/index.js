@@ -2,6 +2,7 @@ const IndexModel = require('../models/index');
 var  authCtrl = require('../controllers/auth/auth');
 var partnerCtrl = require('../controllers/partner');
 var contribCtrl = require('../controllers/contributor');
+var projectCtrl = require('../controllers/project');
 var path = require('path');
 
 
@@ -53,11 +54,9 @@ module.exports = function(router) {
      */
     router.post('/project', authCtrl.verifyAuth, projectCtrl.createProject);
     router.get('/project/:project_id', authCtrl.verifyAuth, projectCtrl.getProject);
-    router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
+    /*router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
     router.put('/project/:project_id/status', authCtrl.verifyAuth, projectCtrl.updateProjectStatus);
-    router.put('/project/:project_id/rating', authCtrl.verifyAuth, projectCtrl.updateProject);
-    router.put('/project/:project_id/rating', authCtrl.verifyAuth, projectCtrl.updateProject);
-    router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);
+    router.put('/project/:project_id', authCtrl.verifyAuth, projectCtrl.updateProject);*/
 
  // router.get('/project/:project_id', partnerCtrl.getPartner);
 
