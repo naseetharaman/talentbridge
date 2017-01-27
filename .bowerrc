@@ -1,4 +1,12 @@
 {
-  "directory": "public/components",
-  "json": "bower.json"
+    "directory":"public/components",
+    "json": "bower.json",
+    "analytics": false,
+    "timeout": 120000,
+    "registry": {
+        "search": [
+            "http://components.paypal.com",
+            "http://bower.herokuapp.com/"
+        ]
+    }
 }

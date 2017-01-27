@@ -1,5 +1,4 @@
 {
-
     "requestURI": "/talentbridge",
     "express": {
         "view cache": false,
@@ -7,9 +6,6 @@
         "views": "path:./.build/templates",
         "mountpath": "config:requestURI"
     },
-    
-
-    
     "view engines": {
         "js": {
             "module": "makara",
@@ -21,33 +17,26 @@
             }
         }
     },
-
     "dust": {
         "helpers": [
-    
+
             "dust-makara-helpers"
-    
+
         ]
     },
-    
-
-    
     "i18n": {
         "contentPath": "path:./locales",
         "fallback": "en-US"
     },
-    
-
     "specialization": {
     },
-
     "middleware": {
         "appsec": {
             "enabled": true,
             "priority": 110,
             "module": {
                 "name": "lusca",
-                "arguments": [  
+                "arguments": [
                     {
                         /*"csp": {
                             "policy": {
@@ -66,8 +55,6 @@
                 ]
             }
         },
-
-        
         "makara": {
             "priority": 100,
             "enabled": true,
@@ -81,19 +68,15 @@
                 ]
             }
         },
-        
-
         "static": {
             "module": {
                 "arguments": [ "path:./.build" ]
             }
         },
-
         "router": {
             "module": {
                 "arguments": [{ "directory": "path:./routes" }]
             }
         }
-
     }
 }
